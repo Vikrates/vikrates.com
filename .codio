@@ -1,0 +1,13 @@
+{
+  "commands": {
+        "Run App": "nodemon ./server.js",
+        "Compile SASS/Less": "node compile-css/compile-css.js",
+        "Run genghisapp(MongoDb Editor)": "genghisapp"
+    },
+
+// Preview button configuration
+  "preview": {
+      "App URL": "http://{{domain}}:3000/",
+      "genghisapp(MongoDb Editor) URL ": "http://{{domain}}:5678/"
+  }
+}

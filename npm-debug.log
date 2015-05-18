@@ -1,0 +1,62 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/codio/.nvm/v0.10.33/bin/node',
+1 verbose cli   '/home/codio/.nvm/v0.10.33/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'node_modules/coffee-script' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 warn package.json crypto@0.0.3 crypto is also the name of a node core module.
+5 verbose cache add [ 'node_modules/coffee-script', null ]
+6 verbose cache add name=undefined spec="node_modules/coffee-script" args=["node_modules/coffee-script",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'node_modules/coffee-script',
+7 verbose parsed url   path: 'node_modules/coffee-script',
+7 verbose parsed url   href: 'node_modules/coffee-script' }
+8 silly lockFile 4da3c6d5-node-modules-coffee-script node_modules/coffee-script
+9 verbose lock node_modules/coffee-script /home/codio/.npm/4da3c6d5-node-modules-coffee-script.lock
+10 info maybeGithub Attempting node_modules/coffee-script from git://github.com/node_modules/coffee-script
+11 silly lockFile 18d1b836-b-com-node-modules-coffee-script git://github.com/node_modules/coffee-script
+12 verbose lock git://github.com/node_modules/coffee-script /home/codio/.npm/18d1b836-b-com-node-modules-coffee-script.lock
+13 verbose addRemoteGit [ 'git://github.com/node_modules/coffee-script', 'master' ]
+14 verbose git clone git://github.com/node_modules/coffee-script Cloning into bare repository '/home/codio/.npm/_git-remotes/git-github-com-node-modules-coffee-script-18d1b836'...
+14 verbose git clone git://github.com/node_modules/coffee-script fatal: remote error:
+14 verbose git clone git://github.com/node_modules/coffee-script   Repository not found.
+15 silly lockFile 18d1b836-b-com-node-modules-coffee-script git://github.com/node_modules/coffee-script
+16 silly lockFile 18d1b836-b-com-node-modules-coffee-script git://github.com/node_modules/coffee-script
+17 info maybeGithub Attempting node_modules/coffee-script from git+ssh://git@github.com:node_modules/coffee-script
+18 silly lockFile c7bbc501-b-com-node-modules-coffee-script git@github.com:node_modules/coffee-script
+19 verbose lock git@github.com:node_modules/coffee-script /home/codio/.npm/c7bbc501-b-com-node-modules-coffee-script.lock
+20 verbose addRemoteGit [ 'git@github.com:node_modules/coffee-script', 'master' ]
+21 error git clone git@github.com:node_modules/coffee-script Cloning into bare repository '/home/codio/.npm/_git-remotes/git-github-com-node-modules-coffee-script-c7bbc501'...
+21 error git clone git@github.com:node_modules/coffee-script Warning: Permanently added the RSA host key for IP address '192.30.252.128' to the list of known hosts.
+21 error git clone git@github.com:node_modules/coffee-script Permission denied (publickey).
+21 error git clone git@github.com:node_modules/coffee-script fatal: Could not read from remote repository.
+21 error git clone git@github.com:node_modules/coffee-script
+21 error git clone git@github.com:node_modules/coffee-script Please make sure you have the correct access rights
+21 error git clone git@github.com:node_modules/coffee-script and the repository exists.
+22 silly lockFile c7bbc501-b-com-node-modules-coffee-script git@github.com:node_modules/coffee-script
+23 silly lockFile c7bbc501-b-com-node-modules-coffee-script git@github.com:node_modules/coffee-script
+24 silly lockFile 4da3c6d5-node-modules-coffee-script node_modules/coffee-script
+25 silly lockFile 4da3c6d5-node-modules-coffee-script node_modules/coffee-script
+26 error addLocal Could not install node_modules/coffee-script
+27 error Error: ENOENT, stat 'node_modules/coffee-script'
+28 error If you need help, you may report this *entire* log,
+28 error including the npm and node versions, at:
+28 error     <http://github.com/npm/npm/issues>
+29 error System Linux 3.16.0-34-generic
+30 error command "/home/codio/.nvm/v0.10.33/bin/node" "/home/codio/.nvm/v0.10.33/bin/npm" "install" "node_modules/coffee-script"
+31 error cwd /home/codio/workspace
+32 error node -v v0.10.33
+33 error npm -v 1.4.28
+34 error path node_modules/coffee-script
+35 error code ENOENT
+36 error errno 34
+37 verbose exit [ 34, true ]

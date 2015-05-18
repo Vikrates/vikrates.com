@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Vikrates</title>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1">
+        <link rel = "stylesheet" href = "/bootstrap-3.3.4/css/bootstrap.min.css" />
+        <link rel = "stylesheet" href = "/font-awesome-4.3.0/css/font-awesome.min.css" />
+        <link rel = "stylesheet" href = "/css/style.css" />
+        <style>
+            #msg_name{
+                text-decoration:underline;
+                cursor:pointer;
+            }
+            .modes {
+                padding: 0 2px;
+                margin: 0 2px;
+                display: inline;
+                border: 1px solid black;
+                background:white;
+
+            }
+            .active{
+                background:rgba(0, 0, 255, 0.17);
+            }
+            #chatLogContainer{
+                width:100%;
+                padding:5px;
+                background:#fff;
+                overflow-y:auto;
+                height:400px;
+            }
+            #msg_msg{
+                margin-left:5px;
+                width: 100%;
+                height: 80px;
+            }
+            #playlist{
+
+                background: white;
+                margin-top: 15px;
+                padding-bottom: 150px;
+
+            }
+            .message_name {
+                display: inline;
+                font-weight: 600;
+            }
+
+            .message_message{
+                display: inline;
+                padding-left: 15px;
+            }
+            .yt-container {
+                position: relative;
+                padding-bottom: 56.25%; /* 16:9 */
+                padding-top: 25px; /* leaves room for the YouTube header  */
+                height: 0;
+                overflow:hidden;
+            }
+
+            .yt-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            body{
+                background-image:url("/img/listenBackground.jpg");
+                background-attachment: fixed;
+                background-size: cover;
+            }
+            }
+            .playlistControls{
+                margin-top:25px;
+                background:tan;
+            }
+            #chatPush{
+                height:75px;
+            }
+            #playlist>.clearfix {
+                padding-right: 9px;
+                border-bottom: 1px solid grey;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class = "container-fluid">
+
+            <div class = "row">
+                <div id = "video_player" class = "col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6 col-xs-6 col-xs-offset-1" style = "height: 550px; ">
+                    <div id='viewerOptions'>
+                        <button class='modes dataSwitchers' data-optionId='videoMode' data-label='Video' data-startIndex='0' data-curIndex=0 data-options='Full|Controls|Hidden|Disabled'>
+                            Video: [Full] | Controls | Hidden | Disabled
+                        </button>
+                        <button class='modes dataSwitchers' data-optionId='playlistMode' data-label='Playlist' data-startIndex='0' data-curIndex=0 data-options='Full|Next|Hidden'>
+                            Playlist: [Full] | Next | Hidden
+                        </button>
+                        <button class='modes dataSwitchers' data-optionId='chatMode' data-label='Chat' data-startIndex='0' data-curIndex=0 data-options='Full|Mention Alerts Only|Hidden'>
+                            Chat: [Full] | Mention Alerts Only | Hidden
+                        </button>
+                    </div>
+                    <div id='viewerOptions'>
+                        <button class='modes'>
+                            Video Popout: [open]
+                        </button>
+                        <button class='modes'>
+                            Chat Popout: [open]
+                        </button>
+                        <button class='modes'>
+                            Playlist Popout: [open]
+                        </button>
+                        <button class='modes'>
+                            MiniPlayer Popout: [open]
+                        </button>
+                    </div>
+                    <div class="yt-container">
+                        <div id ='player' class="yt-video"></div>
+                    </div>
+                    <div id='playlistContainer'>
+                        <div class='playlistControls'>
+                            <input id='newSong' type='text' placeholder='Paste Video Id Here'/>
+                            <button id='addNewSong'>add</button><button id='SkipBtn'>Skip</button>
+
+                        </div>
+                        <div id='playlist'>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div id = "chat_view" class = "col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-6 col-xs-offset-1" style = "height: 1000px; background-color: rgba(239, 235, 235, 0.54);">
+                    Your Known As <span id='msg_name'></span><span id=''>&lt;-- click your name to set it!</span><span id='randomizeName'>[Randomize]</span>
+
+                    <!--  <div id='chat_rooms_list'>
+
+<div class='chat_room active' rid='system'>
+System
+</div>
+<div class='chat_room ' rid='viking'>
+Vikings
+</div>
+<div class='chat_room' rid='pirate'>
+Pirates
+</div>
+<div class='chat_room' rid='dev'>
+Dev Chat
+</div>
+</div>-->
+                    <div id = 'chatLogsContainer'>
+                        <div id = 'chatLogContainer'>
+                            <div id='chatMotd'></div>
+                            <div id='chatHistory'></div>
+
+                            <div id='chatLog'></div>
+
+                            <div id='chatPush'></div>
+                        </div>
+                        <div id='newMsgContainer'>
+                            <textarea id='msg_msg' placeholder='Type your msg and press Enter to sent'></textarea>
+                        </div>
+                        <div class='col-lg-6'>
+
+                        </div>
+                        <div class='col-lg-6'>
+                            <div id='usersList'>
+                                <div id='usersList_header' class='clearfix'>
+                                    <span class='pull-left'>Name</span><span class='pull-right' >Status</span>
+                                </div>
+                                <div class='usersList_row clearfix'>
+                                    <span class='pull-left'>User 1</span>
+                                    <span class='pull-right'>Online</span>
+                                </div>
+                                <div class='usersList_row clearfix'>
+                                    <span class='pull-left'>User 1</span>
+                                    <span class='pull-right'>Online</span>
+                                </div>
+                                <div class='usersList_row clearfix'>
+                                    <span class='pull-left'>User 1</span>
+                                    <span class='pull-right'>Online</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "row">
+
+            </div>
+
+        </div>
+
+    </body>
+
+    <script type = "text/javascript" src = "//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type = "text/javascript" src = "/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/title_notifier.js"></script>
+    <script src="/js/js.cookie.js"></script>
+    <script src="/js/fluidVideo.js"></script>
+    <script type = "text/javascript" src = "/js/moment.js"></script>
+    <script type = "text/javascript" src = "/js/jquery.linkify.js"></script>
+    <script type = "text/javascript" src = "/js/moment.tz.js"></script>
+    <script type = "text/javascript" src = "/js/jquery.emojify.js"></script>
+    <script type = "text/javascript" src = "/js/common.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+        function onYouTubeIframeAPIReady() {
+            window.player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: '8wq8DzpOg8I',
+                playerVars:{
+                    rel:0,
+                    modestbranding:1,
+                    disablekb:1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+
+            window.io.emit('ready',{name:window.name});
+            event.target.playVideo();
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        var done = false;
+        function onPlayerStateChange(event) {
+            console.log(event.data)
+            if (event.data==YT.PlayerState.ENDED){
+                io.emit('songEndSync');
+            }if (event.data== YT.PlayerState.PAUSED){
+                window.player.playVideo();
+            }
+
+        }
+        function stopVideo() {
+            player.stopVideo();
+        }
+        window.io = io.connect()
+        window.awayTimer = null;
+        window.away = false;
+        window.blured = false;
+        $(window).on("blur focus", function(e) {
+            var prevType = $(this).data("prevType");
+
+            if (prevType != e.type) {   //  reduce double fire issues
+                switch (e.type) {
+                    case "blur":
+                        window.blured = true;
+                        if(window.away ==false){
+                            if(window.awayTimer==null){
+                                console.log('away timer started')
+                                window.awayTimer = setTimeout(function(){
+                                    console.log('away timer fired')
+                                    window.io.emit('away');
+                                    window.away = true;
+                                    console.log('you are away')
+                                },20000)
+                            }else{
+                                console.log('you switched tabs again...')
+                            }
+                        }else{
+                            console.log('your still away...')
+                        }
+                        break;
+                    case "focus":
+                        window.blured = false;
+                        titlenotifier.reset();
+
+                        clearTimeout(window.awayTimer);
+                        if(window.away == true){
+                            window.io.emit('back');
+                            console.log('welcome back')
+                            window.away = false;
+                            window.awayTimer = null;
+                        }else{
+                            console.log('still here i see...')
+                        }
+                        break;
+                }
+            }
+
+            $(this).data("prevType", e.type);
+        })
+        // Send the ready event.
+        $(function() {
+            titlenotifier.max(99);
+            titlenotifier.set(0);
+            function genName(){
+                var firstArray = [
+                    'Gruff',
+                    'Tough',
+                    'Drunk',
+                    'Sir',
+                    '',
+                    'Dr.',
+                    'Lord',
+                    'grave digger'
+                ];
+                first = firstArray[Math.round(Math.random()*(firstArray.length-1))];
+                var middleArray=[
+                    'Harri',
+                    'Larry',
+                    'Bernard',
+                    'James',
+                    'Roger',
+                    'Ariel',
+                    'Sarah',
+                    'Jessi',
+                    'shadow',
+                    'umberdance'
+                ];
+                middle = middleArray[Math.round(Math.random()*(middleArray.length-1))];
+                var suffixArray=[
+                    'the II',
+                    'the III',
+                    'the IIth',
+                    'the First',
+                    'the XXV',
+                    'the IIII',
+                    'the inbread',
+                    'the pirate',
+                    'the viking',
+                    'the viking lord',
+                    'the dirty viking lord',
+                    'the shining viking lord',
+                    'the true viking lord',
+                    'the ultimate viking lord',
+                    'the viking prince',
+                    'the time travler',
+                    'the viking',
+                    'the drifter',
+                    'the lover'  ,     
+                    'the captins wench',
+                    'the student',
+                    'the teenager',
+                    'the drunk',
+                    'diggery',
+                    'connal',
+                    ''
+
+                ];
+                suffix = suffixArray[Math.round(Math.random()*(suffixArray.length-1))];
+                window.name = first+' '+middle+' '+suffix;
+                $('#msg_name').html(window.name)
+
+                Cookies.set('name', window.name);
+                window.io.emit('newName',window.name);
+            }
+            $('#msg_name').click(function(){
+                window.name = prompt('name here');
+                Cookies.set('name', window.name);
+                $('#msg_name').html(window.name)
+            })
+            $('#randomizeName').click(function(){
+                genName();
+            })
+            var name = Cookies.get('name');
+
+            if(name==undefined){
+                genName();
+            }else{
+                window.name = name; 
+
+                $('#msg_name').html(window.name)
+            }
+
+
+            window.playlist =[];
+
+
+
+            function redrawUi(){
+                var playlistEle = $('#playlist')
+                playlistEle.empty();
+                for(var i =window.playlist.length-1;i>=0;i--){
+                    var ele =  window.playlist[i];
+                    //draw
+                    var img = $('<span class="col-lg-4"/>');
+                    img.html($('<img src="http://img.youtube.com/vi/'+ele.id+'/3.jpg">'));
+                    var name = $('<span class="col-lg-6"/>');
+                    name.html(ele.name);
+                    var votes = $('<span class="pull-right"/>');
+                    votes.html(ele.requester);
+
+                    var container = $('<div>').append(img).append(name).append(votes).addClass('clearfix');
+                    playlistEle.append(container);
+                }
+            }
+
+
+
+
+
+
+
+
+            var buttons = {};
+            buttons.skip = $('#SkipBtn');
+            buttons.pause = $('#player_pause');
+
+            buttons.skip.click(function(){
+                window.io.emit('skip'); 
+            }); 
+            buttons.pause.click(function(){
+                window.io.emit('pause'); 
+            });
+
+
+            function getCaret(el) { 
+                if (el.selectionStart) { 
+                    return el.selectionStart; 
+                } else if (document.selection) { 
+                    el.focus();
+                    var r = document.selection.createRange(); 
+                    if (r == null) { 
+                        return 0;
+                    }
+                    var re = el.createTextRange(), rc = re.duplicate();
+                    re.moveToBookmark(r.getBookmark());
+                    rc.setEndPoint('EndToStart', re);
+                    return rc.text.length;
+                }  
+                return 0; 
+            }
+            $('#msg_msg').keyup(function (event) {
+                if (event.keyCode == 13) {
+                    var content = this.value;  
+                    var caret = getCaret(this);          
+                    if(event.shiftKey){
+                        this.value = content.substring(0, caret - 1) + "\n" + content.substring(caret, content.length);
+                        event.stopPropagation();
+                    } else {
+                        var data = {
+                            name: $('#msg_name').html(),
+                            message:$('#msg_msg').val(),
+                        };
+
+                        var div = $('<div calss="message">');
+                        var name = $('<div class="message_name"/>');
+                        name.html(data.name+":");
+
+                        var msg = $('<div class="message_message"/>');
+                        msg.html(data.message);
+                        msg.linkify();
+                        msg.emojify();
+                        div.append(name);
+                        div.append(msg);
+
+
+                        var chatlog = $('#chatLog');
+                        chatlog.append(div);
+                        chatlog.prop({ scrollTop: chatlog.prop("scrollHeight") });
+
+                        window.io.emit('msg',data); 
+                        console.log('emit','msg',data);
+                        $('#msg_msg').val('');
+
+                    }
+                }
+            });
+
+            window.io.on('msg',function(message){
+                console.log('message',message);
+                var div = $('<div calss="message">');
+                var name = $('<div class="message_name"/>');
+                name.html(message.name+":");
+                var msg = $('<div class="message_message"/>');
+                msg.html(message.message);
+
+                msg.emojify();
+                div.append(name);
+                div.append(msg);
+                if(window.blured)
+                    titlenotifier.add();
+                var chatlog = $('#chatLog');
+                chatlog.append(div);
+
+
+                $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
+
+            })
+            window.io.on('announce',function(announce){
+                console.log('announce',announce);
+                var div = $('<div calss="sysmsg">');
+                var name = $('<div class="newUserAnnounce"/>');
+                name.html("HAIL <strong>"+announce.name+"</strong>!");
+                name.emojify();
+                div.append(name);
+
+                if(window.blured)
+                    titlenotifier.add();
+                $('#chatLog').append(div);
+
+                $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
+            });
+
+            window.io.on('newUser',function(announce){
+                console.log('announce',announce);
+                var div = $('<div calss="sysmsg">');
+                var name = $('<div class="changeUserAnnounce"/>');
+                name.html(announce.oldname+" now known as: <strong>"+announce.name+"</strong>");
+                name.emojify();
+                div.append(name);
+
+                if(window.blured)
+                    titlenotifier.add();
+                $('#chatLog').append(div);
+            });
+
+
+
+            //motd stuff
+            (function(){
+                var div = $('<div calss="sysmsg">');
+                var motd = $('<div class="MOTD"/>');
+                motd.html('<h2>Vikrates Radio</h2>');
+                motd.append('<p>Welcome to chat, this is a very beta software<br>set your name by clicking on your current name above chat</p>');
+                motd.emojify();
+                div.append(motd);
+                $('#chatMotd').html(div);
+            })();
+
+
+
+
+            var dataSwitcher_Callbacks = {
+                chatMode:function(data){
+                    switch(data.options[data.curIndex]){
+                        case 'Full':
+                            break;
+                        case 'Mention Alerts Only':
+                            break;
+                        case 'Hidden':
+                            break;
+                    }
+                },
+                playlistMode :function(data){
+                    switch(data.options[data.curIndex]){
+                        case 'Full`':
+                            break;
+                        case 'Next':
+                            break;
+                        case 'Hidden':
+                            break;
+                    }
+                },
+                videoMode :function(data){
+                    switch(data.options[data.curIndex]){
+                        case 'Full':
+                            break;
+                        case 'Controls':
+                            break;
+                        case 'Hidden':
+                            break;
+                        case 'Disabled':
+                            break;
+                    }
+                },
+            }
+            $('.dataSwitchers').click(function(ele){
+                var optionId =$(this).attr('data-optionId');
+                var startIndex =$(this).attr('data-startIndex');
+                var curIndex =$(this).attr('data-curIndex');
+                var options =$(this).attr('data-options').split("|");
+                var label =$(this).attr('data-label');
+                var maxIndex =options.length-1;
+                console.log('dataSwitchers ',optionId,startIndex,curIndex,options,label);
+                // Video: [Full] | Controls | Hidden
+
+                if(curIndex<maxIndex){
+                    curIndex++
+                }else{
+                    curIndex=0
+                }
+                $(this).attr('data-curIndex',curIndex);
+                var html =''
+                //return false;
+                for(var i=0;i<options.length;i++){
+                    var item = options[i];
+                    console.log('option',i,item,curIndex)
+                    var str = '';
+                    str=item;
+                    if(i == curIndex){
+                        str='['+str+'] ';
+                    }else{
+                        str=' '+str+' ';
+                    }
+                    if(i>0)
+                        str= '|'+str;
+                    html+=str;
+                }
+                $(this).html(label+': '+html)
+                dataSwitcher_Callbacks[optionId]({
+                    optionId:optionId,
+                    startIndex:startIndex,
+                    curIndex:curIndex,
+                    options:options,
+                    label:label,
+                    maxIndex:maxIndex,
+                })
+
+            })
+
+
+
+
+
+
+
+            /* playlist
+            playlistContainer
+            playlistControls
+            newSong*/
+            $('#addNewSong').click(function(){
+                var songEle = $('#newSong')
+                var song = songEle.val();
+                songEle.val('');
+                window.io.emit('addSong',{name:song,requester: $('#msg_name').html()})
+            })
+            window.io.on('newQueue',function(q){
+                console.log('newQ')
+                window.playlist = q;
+                console.log(q);
+                redrawUi();
+            });
+            redrawUi();
+            window.io.on('history',function(data) {
+                var chatlog = data.chatlog;
+                for(var chatlog_i = 0;chatlog_i<chatlog.length;chatlog_i++){
+                    var message = chatlog[chatlog_i];
+                    var div = $('<div calss="message">');
+                    var name = $('<div class="message_name"/>');
+                    name.html(message.name+":");
+                    var msg = $('<div class="message_message"/>');
+                    msg.html(message.msg);
+
+                    msg.emojify();
+                    msg.linkify();
+                    div.append(name);
+                    div.append(msg);
+                    var chathistoryele = $('#chatHistory');
+                    chathistoryele.append(div);
+                    $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
+                }
+            });
+
+            window.io.on('useraway',function(data){
+                console.log('useraway',data);
+                $('[data-id="'+data.id+'"].user_status').html('Away');
+            })
+            window.io.on('userback',function(data){
+                console.log('userback',data);
+                $('[data-id="'+data.id+'"].user_status').html('Online');
+            })
+            window.onlineUsers = {};
+            window.io.on('newUsersList',function(list){
+                window.onlineUsers = list;
+                console.log('newUsersList',list)
+                $('.usersList_row').remove();
+                var usersList = $('#usersList');
+                for(var user in list){
+                    var obj = list[user];
+                    var userele = $('<span class="pull-left">').html(obj.name);
+                    var statusele = $('<span class="pull-right user_status">').html("Online").attr('data-id',user);
+                    var userContainer = $('<div class="usersList_row clearfix">').append(userele).append(statusele);
+                    usersList.append(userContainer);
+                }
+            });
+            window.io.on('addSongs',function(){
+                alert('add some songs ya freeloaders');
+            })
+            window.io.on('newCur',function(obj){
+                window.currentlyPlaying = obj;
+                console.log('newCur',obj);
+                window.player.loadVideoById(obj.id,obj.seconds,'large');
+                // window.player.loadVideoById("bHQqvYy5KYo", 5, "large")
+            })
+        });
+    </script>
+</html>

@@ -1,0 +1,97 @@
+/* Supports custom variables and shortcuts for media and selectors */
+
+@custom-media    --desktop (width >= 1025px);
+@custom-media    --tablet (width >= 700px) and (width <= 1025px);
+@custom-media    --phone (width <= 740px);
+
+@custom-media    --phoneAndTablet (width <= 1025px);
+@custom-media    --tabletAndDesktop (width >= 741px);
+
+@custom-media    --phonePortraitOnly (width <= 376px);
+@custom-media    --tabletPortraitOnly (width >= 668px) and (width <= 965px);
+
+@custom-media    --phoneLandscapeOnly (width <= 667px);
+
+@custom-media    --iPadPortraitOnly (width >= 604px) and (width <= 767px);
+
+@custom-media    --kindleFirePortraitOnly (width >= 1200px) and (width <= 1210px);
+
+.videoWrapper {
+    height: 100%;
+    width: auto;
+}
+
+html, body, .container-fluid, .row {
+    height: 100%;
+}
+
+@media (--tabletAndDesktop) {
+    #chat_view {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        display: block;
+    }
+}
+
+@media (--phoneLandscapeOnly) {
+    
+    .col-xs-offset-12, .col-xs-offset-11, .col-xs-offset-10, .col-xs-offset-9, .col-xs-offset-8, .col-xs-offset-7, .col-xs-offset-6, .col-xs-offset-5, .col-xs-offset-4, .col-xs-offset-3, .col-xs-offset-2, .col-xs-offset-1, .col-xs-offset-0 {
+    margin-left: 0;
+    }
+    
+}
+
+@media (width >= 604px) and (width <= 639px) { /* Nexus 7 Landscape Fix */
+    
+    .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+        width: 100%;
+    }
+    
+}
+
+@media (--tabletPortraitOnly) {
+    
+    #chat_view {
+        position: relative;
+    }
+    
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        width: 100%;
+    }
+    
+    .col-sm-offset-12, .col-sm-offset-11, .col-sm-offset-10, .col-sm-offset-9, .col-sm-offset-8, .col-sm-offset-7, .col-sm-offset-6, .col-sm-offset-5, .col-sm-offset-4, .col-sm-offset-3, .col-sm-offset-2, .col-sm-offset-1, .col-sm-offset-0 {
+    margin-left: 0;
+    }
+    
+    .col-xs-offset-12, .col-xs-offset-11, .col-xs-offset-10, .col-xs-offset-9, .col-xs-offset-8, .col-xs-offset-7, .col-xs-offset-6, .col-xs-offset-5, .col-xs-offset-4, .col-xs-offset-3, .col-xs-offset-2, .col-xs-offset-1, .col-xs-offset-0 {
+    margin-left: 0;
+    }
+    
+}
+
+@media (--phonePortraitOnly) {
+    
+    .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+        width: 100%;
+    }
+    
+    .col-xs-offset-12, .col-xs-offset-11, .col-xs-offset-10, .col-xs-offset-9, .col-xs-offset-8, .col-xs-offset-7, .col-xs-offset-6, .col-xs-offset-5, .col-xs-offset-4, .col-xs-offset-3, .col-xs-offset-2, .col-xs-offset-1, .col-xs-offset-0 {
+    margin-left: 0;
+    }
+    
+}
+
+@media (--kindleFirePortraitOnly) {
+    
+    #chat_view {
+        position: relative;
+    }
+    
+    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+        width: 100%;
+    }
+    
+}
