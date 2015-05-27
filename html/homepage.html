@@ -33,6 +33,20 @@
                 z-index: 10000;
                 cursor: pointer;
             }
+            .listenNowBadge{
+                margin-top:15px;
+                border:2px solid red;
+                padding:7px;
+                color:red;
+                font-size:4em;
+            }
+            .listenNowBadge:hover{
+                border:2px solid red;
+                padding:7px;
+                color:red;
+                font-size:4em;
+            }
+            FireBoxRoom{display:none;}
         </style>
 
     </head>
@@ -66,7 +80,7 @@
                         <li>
                             <a class="page-scroll listenNow" href="/listen">Listen Now</a>
                         </li>
-                        
+
                         <li>
                             <a class="page-scroll" href="#about">About</a>
                         </li>
@@ -87,9 +101,9 @@
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <h1 class="brand-heading">Vikrates</h1>
-                            <p class="intro-text">Your Source For Metal<br>Viking, Pirate, Classical or other.</p>
-                            <a href="/listen" class="btn btn-circle page-scroll">
-                                <i class="red fa fa-angle-double-down animated"></i>
+                            <p class="intro-text">Your Source For Metal<br>Goblin, Viking, Pirate, Power.</p>
+                            <a href="/listen" class="listenNowBadge">
+                                Listen
                             </a>
                         </div>
                     </div>
@@ -98,7 +112,7 @@
         </header>
 
         <!-- About Section -->
-        <section id="about" class="container content-section text-center">
+        <section id="about" class="container content-section text-center hidden">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>About Vikrates</h2>
@@ -114,8 +128,7 @@
         <section id="contact" class="container content-section text-center">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>Contact Vikrates</h2>
-                    <p>Feel free to contact us at one of our social sites!</p>
+                    <h2>Join the Vikrates Community</h2>
                     <ul class="list-inline banner-social-buttons">
                         <li>
                             <a href="https://www.facebook.com/groups/vikrates/" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">Facebook</span></a>
@@ -126,12 +139,9 @@
                         <li>
                             <a href="https://github.com/vikrates" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                         </li>
-
                         <li>
                             <a href="https://www.reddit.com/r/Vikrates" class="btn btn-default btn-lg"><i class="fa fa-reddit fa-fw"></i> <span class="network-name">Reddit</span></a>
                         </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -161,17 +171,22 @@
 
     </body>
 
-    <!--
-http://www.dgp.toronto.edu/~mccrae/projects/firebox/notes.html#fireboxroom
-contact ME with a better room please
-community will vote if anyone else gets involved
-<FireBoxRoom>
-<Assets>
-<AssetWebSurface id="listenWS" src="/listen" width="1920" height="1080" />
-</Assets>
-<Room use_local_asset="room1">
-<Object id="plane" js_id="1" pos="-8.000000 1.600000 0.000000" xdir="0.000 0.000 -1.000" zdir="1.000 0.000 0.000" scale="5.000000 3.000000 1.000000" websurface_id="listenWS" />
-</Room>
-</FireBoxRoom>
--->
+    <!--http://www.dgp.toronto.edu/~mccrae/projects/firebox/notes.html#fireboxroom-->
+    <FireBoxRoom>
+        <Assets>
+            <AssetWebSurface id="listenWS" src="/listen" width="1920" height="1080" />
+            <AssetObject id="ocean" src="/vr/ocean.obj" mtl="/vr/ocean.mtl" />
+            <AssetObject id="boat" src="/vr/boat.obj" mtl="/vr/boat.mtl" />
+            <AssetImage id="sky_left" src="/vr/skybox/left.jpg" />
+            <AssetImage id="sky_right" src="/vr/skybox/right.jpg" />
+            <AssetImage id="sky_front" src="/vr/skybox/front.jpg" />
+            <AssetImage id="sky_back" src="/vr/skybox/back.jpg" />
+            <AssetImage id="sky_up" src="/vr/skybox/up.jpg" />
+        </Assets>
+        <Room skybox_left_id="sky_left" skybox_right_id="sky_right" skybox_front_id="sky_front" skybox_back_id="sky_back" skybox_up_id="sky_up" visible="false">
+            <Object id="plane" pos="-3.000000 2.200000 -0.900000" lighting="false"  xdir="0.000 0.000 -1.000" zdir="1.000 0.000 0.000" scale="5.000000 3.000000 1.000000" websurface_id="listenWS" />
+            <Object id="boat" pos="0.000000 -5.000000 0.800000" lighting="false"  scale="3.200000 3.200000 3.200000" collision_id="boat" />
+            <Object id="ocean" js_id="ocean" pos="0.000000 -3.900000 0.000000" lighting="false"  cull_face="none"  blend_src="dst_color"/>
+        </Room>
+    </FireBoxRoom>
 </html>

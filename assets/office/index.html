@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>Janus VR - Initial Home</title>
+	</head>
+	<body>
+
+	<FireBoxRoom>
+		<Assets>
+			<AssetScript src="script.txt" />
+			<AssetImage id="sky_left" src="skybox/l.jpg" />
+			<AssetImage id="sky_right" src="skybox/r.jpg" />
+			<AssetImage id="sky_front" src="skybox/f.jpg" />
+			<AssetImage id="sky_back" src="skybox/b.jpg" />
+			<AssetImage id="sky_up" src="skybox/u.jpg" />
+			<AssetImage id="sky_down" src="skybox/d.jpg" />	
+			<AssetWebSurface id="google" src="http://www.google.com" width="1024" height="768" />
+			<AssetWebSurface id="codio" src="http://www.codio.com" width="1024" height="768" />
+			<AssetWebSurface id="tube" src="https://togethertube.com/rooms/vikrates" width="1024" height="768" />
+			<AssetWebSurface id="devdocs" src="http://devdocs.io/" width="1024" height="768" />
+		</Assets>
+	<Room use_local_asset="room_plane" skybox_left_id="sky_left" skybox_right_id="sky_right" skybox_front_id="sky_front" skybox_back_id="sky_back" skybox_up_id="sky_up" skybox_down_id="sky_down" visible="false">
+		<Object id="plane" js_id="53" pos="-8.200001 1.500000 -0.200000" xdir="0.000 0.000 -1.000" zdir="1.000 0.000 0.000" scale="4.000000 2.000000 1.000000" lighting="false" collision_id="plane" websurface_id="codio" />
+		<Object id="plane" js_id="54" pos="-5.600000 1.500000 2.000000" xdir="-1.000 -0.000 -0.000" ydir="-0.000 0.866 0.500" zdir="0.000 0.500 -0.866" scale="4.200000 2.000000 1.000000" lighting="false" collision_id="plane" websurface_id="google" />
+		<Object id="plane" js_id="55" pos="-6.100000 0.700000 -3.400000" xdir="1.000 0.000 0.000" ydir="0.000 0.707 -0.707" zdir="0.000 0.707 0.707" scale="4.000000 2.000000 1.000000" lighting="false" collision_id="plane" websurface_id="tube" />
+		<Object id="plane" js_id="56" pos="-6.100000 2.700000 -2.500000" ydir="0.000 0.707 0.707" zdir="0.000 -0.707 0.707" scale="4.000000 2.000000 1.000000" lighting="false" collision_id="plane" websurface_id="devdocs" />
+		<Object id="plane" js_id="57" pos="-3.400000 0.000000 0.000000" ydir="0.000 0.000 -1.000" zdir="0.000 1.000 0.000" scale="10.000000 5.000000 1.000000" collision_id="plane" />
+	</Room>
+	</FireBoxRoom>
+	</body>
+</html>

@@ -7,7 +7,7 @@
         <link rel = "stylesheet" href = "/font-awesome-4.3.0/css/font-awesome.min.css" />
         <link rel = "stylesheet" href = "/css/style.css" />
         <style>
-            #msg_name{
+            #msg_name,#randomizeName{
                 text-decoration:underline;
                 cursor:pointer;
             }
@@ -38,8 +38,31 @@
 
                 background: white;
                 margin-top: 15px;
-                padding-bottom: 150px;
+                min-height: 150px;
 
+            }
+            #emptyPlaylist{
+
+                background: white;
+                min-height: 150px;
+
+            }
+            #emptyPlaylist {
+                display: none;
+                padding-top: 11px;
+                padding-bottom: 11px;
+            }
+            .playlistControls {
+                margin-top: 25px;
+                padding: 4px;
+                background: white;
+                border-bottom: 1px solid grey;
+                border-top-left-radius: 7px;
+                border-top-right-radius: 7px;
+            }
+            #currentlyPlaying{
+                padding-top: 11px;
+                padding-bottom: 11px;
             }
             .message_name {
                 display: inline;
@@ -50,14 +73,13 @@
                 display: inline;
                 padding-left: 15px;
             }
-            .yt-container {
+               .yt-container {
                 position: relative;
                 padding-bottom: 56.25%; /* 16:9 */
                 padding-top: 25px; /* leaves room for the YouTube header  */
                 height: 0;
                 overflow:hidden;
             }
-
             .yt-video {
                 position: absolute;
                 top: 0;
@@ -66,14 +88,9 @@
                 height: 100%;
             }
             body{
-                background-image:url("/img/listenBackground.jpg");
+                background-image:url("/img/listenBackground3.jpg");
                 background-attachment: fixed;
                 background-size: cover;
-            }
-            }
-            .playlistControls{
-                margin-top:25px;
-                background:tan;
             }
             #chatPush{
                 height:75px;
@@ -81,6 +98,14 @@
             #playlist>.clearfix {
                 padding-right: 9px;
                 border-bottom: 1px solid grey;
+            }
+            #currentlyPlaying{
+                background:white;
+                padding:5px;
+                height:75px;
+            }
+            body {
+                padding-top: 10px;
             }
         </style>
     </head>
@@ -90,31 +115,114 @@
 
             <div class = "row">
                 <div id = "video_player" class = "col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6 col-xs-6 col-xs-offset-1" style = "height: 550px; ">
-                    <div id='viewerOptions'>
-                        <button class='modes dataSwitchers' data-optionId='videoMode' data-label='Video' data-startIndex='0' data-curIndex=0 data-options='Full|Controls|Hidden|Disabled'>
-                            Video: [Full] | Controls | Hidden | Disabled
-                        </button>
-                        <button class='modes dataSwitchers' data-optionId='playlistMode' data-label='Playlist' data-startIndex='0' data-curIndex=0 data-options='Full|Next|Hidden'>
-                            Playlist: [Full] | Next | Hidden
-                        </button>
-                        <button class='modes dataSwitchers' data-optionId='chatMode' data-label='Chat' data-startIndex='0' data-curIndex=0 data-options='Full|Mention Alerts Only|Hidden'>
-                            Chat: [Full] | Mention Alerts Only | Hidden
-                        </button>
-                    </div>
-                    <div id='viewerOptions'>
-                        <button class='modes'>
-                            Video Popout: [open]
-                        </button>
-                        <button class='modes'>
-                            Chat Popout: [open]
-                        </button>
-                        <button class='modes'>
-                            Playlist Popout: [open]
-                        </button>
-                        <button class='modes'>
-                            MiniPlayer Popout: [open]
-                        </button>
-                    </div>
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#"><i class="fa fa-meh-o"></i>  <span class="light">Vikrate</span> Web Radio</a>
+                            </div>
+
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#">Common Room</a></li>
+                                    <li><a href="#">Vip Lounge</a></li>
+
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Video Quality<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Lowest</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">720</a></li>
+                                            <li><a href="#">1080</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Best</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li class='text-center'>Click to toggle:</li>
+                                            <li class="divider"></li>
+                                            <li>Video: 
+                                                <ul>
+                                                    <li>Full</li>
+                                                    <li>Controls</li>
+                                                    <li>Hidden</li>
+                                                    <li>Disabled</li>
+                                                </ul>
+                                            </li>
+                                            <li>Now Playing: 
+                                                <ul>
+                                                    <li>Visible</li>
+                                                    <li>Visible</li>
+                                                    <li>Visible</li>
+                                                </ul>
+                                            </li>
+                                            <li>Chat: 
+                                                <ul>
+                                                    <li>Full</li>
+                                                    <li>Mention Alerts Only</li>
+                                                    <li>Hidden</li>
+                                                </ul>
+                                            </li>
+                                            <li>Playlist: 
+                                                <ul>
+
+                                                    <li>Full</li>
+                                                    <li>Next</li>
+                                                    <li>Hidden</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Popout<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li class="divider"></li>
+                                            <li><a href="#">Chat</a></li>
+                                            <li><a href="#">Video</a></li>
+                                            <li><a href="#">MicroPlayer</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                    <!--     <div id='viewerOptions'>
+<div class='modes dataSwitchers' data-optionId='videoMode' data-label='Video' data-startIndex='0' data-curIndex=0 data-options='Full|Controls|Hidden|Disabled'>
+Video: <button>Full</button> | <button>Controls</button> | <button>Hidden</button> | <button>Disabled</button>
+</div>
+<button class='modes dataSwitchers' data-optionId='playlistMode' data-label='Playlist' data-startIndex='0' data-curIndex=0 data-options='Full|Next|Hidden'>
+Playlist: <button>Full</button> | <button>Next</button> | <button>Hidden</button>
+</button>
+<div class='modes dataSwitchers' data-optionId='chatMode' data-label='Chat' data-startIndex='0' data-curIndex=0 data-options='Full|Mention Alerts Only|Hidden'>
+Chat: <button>Full</button> | <button>Mention Alerts Only</button> | <button>Hidden</button>
+</div>
+</div>
+<div id='viewerOptions'>
+<div class='modes'>
+Video Popout: open
+</div>
+<div class='modes'>
+Chat Popout: <button>open</button>
+</div>
+<div class='modes'>
+Playlist Popout: <button>open</button>
+</div>
+<div class='modes'>
+MiniPlayer Popout: <button>open</button>
+</div>
+</div>-->
                     <div class="yt-container">
                         <div id ='player' class="yt-video"></div>
                     </div>
@@ -122,10 +230,19 @@
                         <div class='playlistControls'>
                             <input id='newSong' type='text' placeholder='Paste Video Id Here'/>
                             <button id='addNewSong'>add</button><button id='SkipBtn'>Skip</button>
+                        </div>
+                        <div id='currentlyPlaying' style='display:none'>
+                            <p id='nowPlaying_title'>Song Name</p>
+                            <p id='nowPlaying_suggester'>Suggester</p>
+                        </div>
+                        <div id='playlist' style='display:none'>
 
                         </div>
-                        <div id='playlist'>
-
+                        <div id='emptyPlaylist' class='text-center'>
+                            <h1><i class="fa fa-meh-o"></i></h1>
+                            <h3>No Music in playlist</h3>
+                            <h3>Show Me Your Favorite Music</h3>
+                            <h4>Auto Playlist Mode</h4>
                         </div>
 
                     </div>
@@ -134,33 +251,16 @@
                 </div>
                 <div id = "chat_view" class = "col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-6 col-xs-offset-1" style = "height: 1000px; background-color: rgba(239, 235, 235, 0.54);">
                     Your Known As <span id='msg_name'></span><span id=''>&lt;-- click your name to set it!</span><span id='randomizeName'>[Randomize]</span>
-
-                    <!--  <div id='chat_rooms_list'>
-
-<div class='chat_room active' rid='system'>
-System
-</div>
-<div class='chat_room ' rid='viking'>
-Vikings
-</div>
-<div class='chat_room' rid='pirate'>
-Pirates
-</div>
-<div class='chat_room' rid='dev'>
-Dev Chat
-</div>
-</div>-->
                     <div id = 'chatLogsContainer'>
                         <div id = 'chatLogContainer'>
                             <div id='chatMotd'></div>
                             <div id='chatHistory'></div>
-
                             <div id='chatLog'></div>
 
                             <div id='chatPush'></div>
                         </div>
                         <div id='newMsgContainer'>
-                            <textarea id='msg_msg' placeholder='Type your msg and press Enter to sent'></textarea>
+                            <textarea id='msg_msg' placeholder='Type your msg and press Enter to send'></textarea>
                         </div>
                         <div class='col-lg-6'>
 
@@ -224,12 +324,7 @@ Dev Chat
             window.player = new YT.Player('player', {
                 height: '390',
                 width: '640',
-                videoId: '8wq8DzpOg8I',
-                playerVars:{
-                    rel:0,
-                    modestbranding:1,
-                    disablekb:1
-                },
+                videoId: 'M7lc1UVf-VE',
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
@@ -298,7 +393,7 @@ Dev Chat
                             window.away = false;
                             window.awayTimer = null;
                         }else{
-                            console.log('still here i see...')
+                            console.log('your back but you appear to have never left O.o...')
                         }
                         break;
                 }
@@ -365,50 +460,64 @@ Dev Chat
 
                 ];
                 suffix = suffixArray[Math.round(Math.random()*(suffixArray.length-1))];
-                window.name = first+' '+middle+' '+suffix;
-                $('#msg_name').html(window.name)
+                if(window.initFinished)
+                    window.io.emit('newName', first+' '+middle+' '+suffix);
+                else{
+                    window.name = first+' '+middle+' '+suffix;
+                    $('#msg_name').html(window.name);
+                }
 
-                Cookies.set('name', window.name);
-                window.io.emit('newName',window.name);
             }
-            $('#msg_name').click(function(){
-                window.name = prompt('name here');
-                Cookies.set('name', window.name);
+            window.io.on('yourNewName',function(data){
+                window.name =data;
                 $('#msg_name').html(window.name)
+                Cookies.set('name', window.name);
+            })
+            $('#msg_name').click(function(){
+                window.io.emit('newName',prompt('name here'));
             })
             $('#randomizeName').click(function(){
                 genName();
             })
+
+            window.initFinished = false;
             var name = Cookies.get('name');
 
             if(name==undefined){
                 genName();
             }else{
                 window.name = name; 
-
                 $('#msg_name').html(window.name)
             }
 
-
+            window.initFinished=true;
             window.playlist =[];
 
 
 
             function redrawUi(){
-                var playlistEle = $('#playlist')
-                playlistEle.empty();
-                for(var i =window.playlist.length-1;i>=0;i--){
-                    var ele =  window.playlist[i];
-                    //draw
-                    var img = $('<span class="col-lg-4"/>');
-                    img.html($('<img src="http://img.youtube.com/vi/'+ele.id+'/3.jpg">'));
-                    var name = $('<span class="col-lg-6"/>');
-                    name.html(ele.name);
-                    var votes = $('<span class="pull-right"/>');
-                    votes.html(ele.requester);
+                if(window.playlist.length>0){
+                    $('#playlist').show();
+                    $('#emptyPlaylist').hide();
+                    var playlistEle = $('#playlist')
+                    playlistEle.empty();
+                    for(var i =window.playlist.length-1;i>=0;i--){
+                        var ele =  window.playlist[i];
+                        //draw
+                        var img = $('<span class="col-lg-4"/>');
+                        img.html($('<img src="http://img.youtube.com/vi/'+ele.id+'/3.jpg">'));
+                        var name = $('<span class="col-lg-6"/>');
+                        name.html(ele.name);
+                        var votes = $('<span class="pull-right"/>');
+                        votes.html(ele.requester);
 
-                    var container = $('<div>').append(img).append(name).append(votes).addClass('clearfix');
-                    playlistEle.append(container);
+                        var container = $('<div>').append(img).append(name).append(votes).addClass('clearfix');
+                        playlistEle.append(container);
+                    }
+                }else{
+
+                    $('#playlist').hide();
+                    $('#emptyPlaylist').show()
                 }
             }
 
@@ -458,28 +567,10 @@ Dev Chat
                         var data = {
                             name: $('#msg_name').html(),
                             message:$('#msg_msg').val(),
-                        };
-
-                        var div = $('<div calss="message">');
-                        var name = $('<div class="message_name"/>');
-                        name.html(data.name+":");
-
-                        var msg = $('<div class="message_message"/>');
-                        msg.html(data.message);
-                        msg.linkify();
-                        msg.emojify();
-                        div.append(name);
-                        div.append(msg);
-
-
-                        var chatlog = $('#chatLog');
-                        chatlog.append(div);
-                        chatlog.prop({ scrollTop: chatlog.prop("scrollHeight") });
-
+                        };                        
                         window.io.emit('msg',data); 
                         console.log('emit','msg',data);
                         $('#msg_msg').val('');
-
                     }
                 }
             });
@@ -504,6 +595,20 @@ Dev Chat
                 $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
 
             })
+
+            window.io.on('newName',function(data){
+                console.log('newName',data);
+                var div = $('<div calss="sysmsg">');
+                var name = $('<div class="newUserAnnounce"/>');
+                name.html("<strong>"+data.oldName+"</strong> now known as <strong>"+data.name+"</strong>!");
+                name.emojify();
+                div.append(name);
+                if(window.blured)
+                    titlenotifier.add();
+                $('#chatLog').append(div);
+                $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
+                window.io.emit('userList'); 
+            })
             window.io.on('announce',function(announce){
                 console.log('announce',announce);
                 var div = $('<div calss="sysmsg">');
@@ -517,6 +622,7 @@ Dev Chat
                 $('#chatLog').append(div);
 
                 $('#chatLogContainer').prop({ scrollTop: $('#chatLogContainer').prop("scrollHeight") });
+                window.io.emit('userList');
             });
 
             window.io.on('newUser',function(announce){
@@ -548,86 +654,16 @@ Dev Chat
 
 
 
-            var dataSwitcher_Callbacks = {
-                chatMode:function(data){
-                    switch(data.options[data.curIndex]){
-                        case 'Full':
-                            break;
-                        case 'Mention Alerts Only':
-                            break;
-                        case 'Hidden':
-                            break;
-                    }
-                },
-                playlistMode :function(data){
-                    switch(data.options[data.curIndex]){
-                        case 'Full`':
-                            break;
-                        case 'Next':
-                            break;
-                        case 'Hidden':
-                            break;
-                    }
-                },
-                videoMode :function(data){
-                    switch(data.options[data.curIndex]){
-                        case 'Full':
-                            break;
-                        case 'Controls':
-                            break;
-                        case 'Hidden':
-                            break;
-                        case 'Disabled':
-                            break;
-                    }
-                },
-            }
-            $('.dataSwitchers').click(function(ele){
-                var optionId =$(this).attr('data-optionId');
-                var startIndex =$(this).attr('data-startIndex');
-                var curIndex =$(this).attr('data-curIndex');
-                var options =$(this).attr('data-options').split("|");
-                var label =$(this).attr('data-label');
-                var maxIndex =options.length-1;
-                console.log('dataSwitchers ',optionId,startIndex,curIndex,options,label);
-                // Video: [Full] | Controls | Hidden
 
-                if(curIndex<maxIndex){
-                    curIndex++
-                }else{
-                    curIndex=0
-                }
-                $(this).attr('data-curIndex',curIndex);
-                var html =''
-                //return false;
-                for(var i=0;i<options.length;i++){
-                    var item = options[i];
-                    console.log('option',i,item,curIndex)
-                    var str = '';
-                    str=item;
-                    if(i == curIndex){
-                        str='['+str+'] ';
-                    }else{
-                        str=' '+str+' ';
-                    }
-                    if(i>0)
-                        str= '|'+str;
-                    html+=str;
-                }
-                $(this).html(label+': '+html)
-                dataSwitcher_Callbacks[optionId]({
-                    optionId:optionId,
-                    startIndex:startIndex,
-                    curIndex:curIndex,
-                    options:options,
-                    label:label,
-                    maxIndex:maxIndex,
-                })
-
+            window.io.on('NoMedia',function(){
+                console.log('NoMedia playing playlist')
+                window.player.loadPlaylist({
+                    list:'RDMpS16zVpLpE',
+                    listType:'playlist',
+                    index:Math.round(Math.random()*26)
+                });
+                $('#currentlyPlaying').hide();
             })
-
-
-
 
 
 
@@ -640,13 +676,16 @@ Dev Chat
                 var songEle = $('#newSong')
                 var song = songEle.val();
                 songEle.val('');
-                window.io.emit('addSong',{name:song,requester: $('#msg_name').html()})
+                window.io.emit('addSong',{id:song,requester: $('#msg_name').html()})
             })
-            window.io.on('newQueue',function(q){
+            window.io.on('newQ',function(q){
                 console.log('newQ')
                 window.playlist = q;
                 console.log(q);
                 redrawUi();
+                $('#currentlyPlaying').show();
+                $('#playlist').show();
+                $('#emptyPlaylist').hide()
             });
             redrawUi();
             window.io.on('history',function(data) {
@@ -691,15 +730,37 @@ Dev Chat
                     usersList.append(userContainer);
                 }
             });
-            window.io.on('addSongs',function(){
-                alert('add some songs ya freeloaders');
+            window.io.on('addSongs',function(){ 
+                console.log('NoMedia playing playlist')
+                window.player.loadPlaylist({
+                    list:'RDMpS16zVpLpE',
+                    listType:'playlist',
+                    index:Math.round(Math.random()*26)
+                });
+                $('#emptyPlaylist').show()
+                $('#currentlyPlaying').hide();
             })
-            window.io.on('newCur',function(obj){
+            window.io.on('CurrentlyPlaying',function(obj){
                 window.currentlyPlaying = obj;
                 console.log('newCur',obj);
                 window.player.loadVideoById(obj.id,obj.seconds,'large');
+
                 // window.player.loadVideoById("bHQqvYy5KYo", 5, "large")
             })
+            window.io.on('cur',function(obj){
+                console.log('cur',obj);
+            })
+            window.io.on('whois',function(obj){
+                console.log('whois',obj.id,'=',window.sessionId,'=',obj.id==window.sessionId);
+                if(obj.id==window.sessionId){
+                    window.io.emit('here');
+                    console.log('Im still here i just closed another window');
+                }
+            })
+            window.io.on('youare',function(id){
+                console.log('youare',id);
+                window.sessionId = id;
+            });
         });
     </script>
 </html>
