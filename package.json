@@ -8,6 +8,11 @@
   },
   "main": "./app",
   "dependencies": {
-    "express.io": "*"
+    "express.io": "*",
+    "mongoose":"*",
+    "bcrypt":"*",
+    "body-parser":"*",
+    "request":"*",
+    "cheerio":"*"
   }
 }
