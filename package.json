@@ -9,5 +9,5 @@
   "main": "./app",
   "dependencies": {
     "express.io": "*"
-  },
+  }
 }
