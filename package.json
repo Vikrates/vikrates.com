@@ -13,6 +13,7 @@
     "bcrypt":"*",
     "body-parser":"*",
     "request":"*",
-    "cheerio":"*"
+    "cheerio":"*",
+    "moment":"*"
   }
 }
