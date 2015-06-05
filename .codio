@@ -1,6 +1,6 @@
 {
   "commands": {
-        "Run App": "nodemon ./server.js",
+        "Run App": "nodemon ./app.js",
         "Compile SASS/Less": "node compile-css/compile-css.js",
         "Run genghisapp(MongoDb Editor)": "genghisapp"
     },

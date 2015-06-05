@@ -2,7 +2,7 @@
 var playlistManger = function(options){
     //init
     this.needsTick=true;
-    this.currentlyPlaying={};
+    this.currentlyPlaying=null;
     this.consolePrefix = '';
     this.queue = [];
     this._UsersToVotes ={};
@@ -28,6 +28,7 @@ var playlistManger = function(options){
     //main functions
     this.addSong=function(obj){
         obj.maxSeconds =this.__convert_time(obj.maxSeconds);
+        console.log('addSong',obj);
         this.queue.push(obj);
     };
 
@@ -64,6 +65,7 @@ var playlistManger = function(options){
             console.log(this.consolePrefix+' BroadCasting new CurrentlyPlaying');
             this.app.io.sockets.emit('newQ',this.queue);
             console.log(this.consolePrefix+' BroadCasting new Q');
+            return true
         }
         this.needsTick = false;
        
@@ -109,6 +111,9 @@ var playlistManger = function(options){
             this._UsersToVotes[userId]=[];
         }
         if(this.queue.length>0 || this.isPlaying){
+            if(this.currentlyPlaying==null){
+                this.nextSong();
+            }
             this.app.io.sockets.emit('CurrentlyPlaying',this.currentlyPlaying);
             console.log(this.consolePrefix+' BroadCasting new CurrentlyPlaying');
             this.app.io.sockets.emit('newQ',this.queue);

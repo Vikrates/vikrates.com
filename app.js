@@ -151,18 +151,18 @@ db.once('open', function() {
             if (!error && response.statusCode == 200){
                 var cheerio = require('cheerio');
                 var $ = cheerio.load(body);
-                console.log($('meta[itemprop="duration"]').attr('content'));
                 obj.maxSeconds= $('meta[itemprop="duration"]').attr('content');
                 obj.name= $('meta[itemprop="name"]').attr('content');
 
                 var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
+                console.log('addSong',obj);
                 playlistManger.addSong(obj)
             }else{
                 console.log("ERROR",error);
             }
         });
     });
-    function addSongManuel(id,name,videoId){
+    function addSongManual(id,name,videoId){
         var obj = {
             id:videoId,
             requester:{
@@ -185,7 +185,12 @@ db.once('open', function() {
             }
         });
     }
-    addSongManuel('0','sam2332','5uCNxVJ0Z_s');
+    addSongManual('0','testing','5uCNxVJ0Z_s');
+    addSongManual('0','testing','JCDjP4JnpGU');
+    addSongManual('0','testing','4Sx5xOQpzB8');
+    addSongManual('0','testing','fj-10lIrboM');
+    addSongManual('0','testing','9d8SzG4FPyM');
+    addSongManual('0','testing','r7Zy6ieJAHQ');
     app.io.route('newName', function(req) {
         console.log(req.data);
         //fs.writeSync('assets/queue.json',JSON.stringify(process.playlist));
