@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <title>Vikrates</title>
+        <title>Vikrates - Listen Now</title>
         <meta name = "viewport" content = "width=device-width, initial-scale=1">
         <link rel = "stylesheet" href = "/bootstrap-3.3.4/css/bootstrap.min.css" />
         <link rel = "stylesheet" href = "/font-awesome-4.3.0/css/font-awesome.min.css" />
@@ -326,7 +326,7 @@ MiniPlayer Popout: <button>open</button>
             window.player = new YT.Player('player', {
                 height: '390',
                 width: '640',
-                videoId: 'M7lc1UVf-VE',
+                videoId: 'CWh3k0ChdEY',
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
@@ -470,8 +470,9 @@ MiniPlayer Popout: <button>open</button>
                 }
 
             }
-            window.io.on('yourNewName',function(data){
-                window.name =data;
+            window.io.on('user',function(user){
+            	console.log('user',user)
+                window.name =user.name;
                 $('#msg_name').html(window.name)
                 Cookies.set('name', window.name);
             })
@@ -505,13 +506,22 @@ MiniPlayer Popout: <button>open</button>
                     playlistEle.empty();
                     for(var i =window.playlist.length-1;i>=0;i--){
                         var ele =  window.playlist[i];
+                        console.log(ele);
                         //draw
                         var img = $('<span class="col-lg-4"/>');
                         img.html($('<img src="http://img.youtube.com/vi/'+ele.id+'/3.jpg">'));
                         var name = $('<span class="col-lg-6"/>');
                         name.html(ele.name);
                         var votes = $('<span class="pull-right"/>');
-                        votes.html(ele.requester);
+                        var voteWidgetContainer = $('<div class="voteWidgetContainer"/>')
+                        
+                        var voteWidgetCount = $('<div class="voteWidgetCount"/>').html(ele.votes);
+                        
+                        voteWidgetContainer.append(voteWidgetCount);
+                        var voteWidgetBtn = $('<div class="voteWidgetBtn btn btn-success"/>').html('Vote +1');
+                        
+                        voteWidgetContainer.append(voteWidgetBtn);
+                        votes.html(voteWidgetContainer);
 
                         var container = $('<div>').append(img).append(name).append(votes).addClass('clearfix');
                         playlistEle.append(container);
@@ -657,16 +667,20 @@ MiniPlayer Popout: <button>open</button>
 
 
 
-
+			window.noMedia = false;
             window.io.on('NoMedia',function(){
-                console.log('NoMedia playing playlist')
-                window.player.loadPlaylist({
-                    list:'RDMpS16zVpLpE',
-                    listType:'playlist',
-                    index:Math.round(Math.random()*26)
-                });
-                $('#currentlyPlaying').hide();
+            	if(window.noMedia==false){
+            		window.noMedia = true
+                	console.log('NoMedia playing playlist')
+                	window.player.loadPlaylist({
+                    	list:'RDMpS16zVpLpE',
+                    	listType:'playlist',
+                    	index:Math.round(Math.random()*26)
+                	});
+                	$('#currentlyPlaying').hide();
+            	}
             })
+            	
 
 
 
@@ -747,6 +761,8 @@ MiniPlayer Popout: <button>open</button>
                 window.currentlyPlaying = obj;
                 console.log('newCur',obj);
                 window.player.loadVideoById(obj.id,obj.seconds,'large');
+                $('#nowPlaying_title').html(obj.name);
+				$('#nowPlaying_suggester').html(obj.requester.name);
 
                 // window.player.loadVideoById("bHQqvYy5KYo", 5, "large")
             })

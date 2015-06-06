@@ -53,17 +53,18 @@ setInterval(function(){
                         process.app.io.emit('NoMedia');
                     }
                 }
-            }
-            console.log(log);
+           
+       		} 
         }else{
             log+='notPly';
             if(playlistManger.queue.length>0){
-                log+='hzNxt';
+                log+='goNxt';
                 playlistManger.nextSong();
-            }
-            console.log(log);
+       		}
         }
-    }
+        process.app.io.emit('log',log);    
+
+	}
 },1000);
 
 // Create the server 
@@ -114,8 +115,6 @@ db.once('open', function() {
             online:true,
             lastSeen:new moment(new Date()),
             hidden:false,
-            voteWeight:1
-
         };
         console.log('sever got ready',req.data);
         app.io.broadcast('announce',{
@@ -125,14 +124,14 @@ db.once('open', function() {
         Chat.find({}, function(err, results){
             req.io.emit('history',{
                 chatlog:results
-            });
+            });  
         });
         console.log("server broadcast announce",{
             user: req.data.name
         });
         
-        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
-        playlistManger.newUser(req.sessionID);
+        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(req);;
+        playlistManger.newUser(req,req.sessionID);
         req.io.emit('youare',req.sessionID);
     });
 
@@ -140,8 +139,18 @@ db.once('open', function() {
         app.io.broadcast('newUsersList',process.onlineUsers);
     });
     app.io.route('addSong', function(req) {
+    	if(req.data.id.indexOf('v=')!=-1){
+    		var video_id =req.data.id.split('v=')[1];
+			var ampersandPosition = video_id.indexOf('&');
+			if(ampersandPosition != -1) {
+		  		video_id = video_id.substring(0, ampersandPosition);
+			}
+    	}else{
+    		video_id = req.data.id;
+    	}
+    
         var obj = {
-            id:req.data.id,
+            id:video_id,
             requester:{
                 id:req.sessionID,
                 name:req.data.requester
@@ -154,7 +163,7 @@ db.once('open', function() {
                 obj.maxSeconds= $('meta[itemprop="duration"]').attr('content');
                 obj.name= $('meta[itemprop="name"]').attr('content');
 
-                var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
+                var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(req);
                 console.log('addSong',obj);
                 playlistManger.addSong(obj)
             }else{
@@ -177,32 +186,32 @@ db.once('open', function() {
                 console.log($('meta[itemprop="duration"]').attr('content'));
                 obj.maxSeconds= $('meta[itemprop="duration"]').attr('content');
                 obj.name= $('meta[itemprop="name"]').attr('content');
-
-                var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
+				
+                var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(null);
                 playlistManger.addSong(obj)
             }else{
                 console.log("ERROR",error);
             }
         });
     }
-    addSongManual('0','testing','5uCNxVJ0Z_s');
-    addSongManual('0','testing','JCDjP4JnpGU');
-    addSongManual('0','testing','4Sx5xOQpzB8');
+    addSongManual('0','testing','PCicKydX5GE');
+    addSongManual('0','testing','TK4N5W22Gts');
+    addSongManual('0','testing','Wch3gJG2GJ4');
     addSongManual('0','testing','fj-10lIrboM');
-    addSongManual('0','testing','9d8SzG4FPyM');
-    addSongManual('0','testing','r7Zy6ieJAHQ');
+ 	//addSongManual('0','testing','9d8SzG4FPyM');
+    // addSongManual('0','testing','r7Zy6ieJAHQ');
     app.io.route('newName', function(req) {
         console.log(req.data);
-        //fs.writeSync('assets/queue.json',JSON.stringify(process.playlist));
+            //fs.writeSync('assets/queue.json',JSON.stringify(process.playlist));
         var oldname =req.session.user.name;
         app.io.sockets.emit('newName',{
             name:req.data,
-            oldName:oldname
+        oldName:oldname
         });
 
         var sanitizer = require('sanitizer');
         req.session.user.name = sanitizer.escape(req.data);
-        req.io.emit('yourNewName',req.session.user.name);
+        req.io.emit('user',req.session.user);
     });
 
     app.io.route('msg', function(req) {
@@ -222,8 +231,8 @@ db.once('open', function() {
         }
     });
     app.io.route('vote', function(req) {
-        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
-        playlistManger.vote(req.data.videoId,req.sessionID,req.session.user.weight);
+        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(req);
+        playlistManger.vote(req.data.videoId,req.sessionID);
     });
     app.io.route('away', function(req) {
         req.session.user.online = true;
@@ -238,19 +247,19 @@ db.once('open', function() {
         app.io.sockets.emit('newUsersList',process.onlineUsers);
     });
     app.io.route('skip', function(req) { 
-        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
-        if(req.session.user.admin==false)
-            playlistManger.voteSkip();
-        else if(req.session.user.admin==true){
+        var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(req);
+       // if(req.session.user.admin==false)
+        //    playlistManger.voteSkip();
+       // else if(req.session.user.admin==true){
             playlistManger.nextSong();
-        }
+        //}
     });
     app.io.route('disconnect', function(req) {
         console.warn('io.route.disconnect');
         var theReq = req;
         process.removalTimers[req.sessionID]=setTimeout(function(){
             var moment = require('moment');
-            var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
+            var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app).setReq(req);
             playlistManger.newUser(theReq.sessionID);
             
             app.io.sockets.emit('newUsersList',process.onlineUsers);
@@ -289,7 +298,7 @@ db.once('open', function() {
     console.log('server started on port '+port);
     app.listen(port);
     var playlistManger = require('./custom_node_module/playlistManager.js').setApp(app);
-    playlistManger.nextSong();
+    playlistManger.initSong();
 });
 
 
