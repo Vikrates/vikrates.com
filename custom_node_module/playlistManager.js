@@ -193,7 +193,7 @@ this.__convert_time = function(duration) {
     }
 
     duration = 0;
-    if(a!=undefined){
+    if(a!==undefined){
         if (a.length == 3) {
             duration = duration + parseInt(a[0]) * 3600;
             duration = duration + parseInt(a[1]) * 60;
